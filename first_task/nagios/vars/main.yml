@@ -1,0 +1,15 @@
+dependency:
+ - firewalld
+ - httpd
+ - httpd-tools
+ - php
+ - gcc 
+ - wget
+ - glibc-common
+ - gc
+ - gd-devel
+ - make
+ - net-snmp
+ - unzip
+ - python-pip
+ - python-passlib

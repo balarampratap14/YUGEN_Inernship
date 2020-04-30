@@ -1,0 +1,20 @@
+---
+# defaults file for nagios
+# for local caching of downloaded data
+
+local_cache_dir: "{{nagios_dir}}/cache"
+nagios_email_address: "500061550@stu.upes.ac.in"
+
+# nagios configurations
+nagios_version: "4.4.5"
+nagios_tgz_filename: "nagios-{{ nagios_version }}.tar.gz"
+nagios_dir: /opt/nagios
+nagios_core_dir: "{{nagios_dir}}/nagios-{{nagios_version}}"
+nagios_base_dir: /usr/local/nagios
+nagios_admin_user: nagiosadmin
+nagios_admin_pass: nagiosadmin
+
+#plugin configurations
+nagios_plugins_version: "2.2.1"
+nagios_plugins_tgz_filename: "nagios-plugins-{{ nagios_plugins_version }}.tar.gz"
+

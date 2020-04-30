@@ -1,0 +1,39 @@
+---
+- name: download nagios plugin at dir "({{ local_cache_dir }}/"
+  get_url:
+     url: "https://nagios-plugins.org/download/{{ nagios_plugins_tgz_filename }}"
+     dest: "{{ local_cache_dir }}/"
+
+- name: "Extract from {{ local_cache_dir }}/{{ nagios_plugins_tgz_filename }} to {{ nagios_dir }}"
+  unarchive:
+    src:  "{{ local_cache_dir }}/{{ nagios_plugins_tgz_filename }}"
+    dest: "{{ nagios_dir }}"
+    remote_src: yes
+
+- name: Listing the files
+  command: ls -l {{ nagios_dir }}
+  register: result
+
+- debug:
+    var: result.stdout_lines    
+
+- name: configure nagios plugin
+  command: "./configure --with-nagios-user=nagios --with-nagios-group=nagios"
+  args:
+    chdir: "{{nagios_core_dir}}"  
+  register: result
+
+- name: configarion output
+  debug:
+    var: result.stdout_lines
+
+- name: run make all
+  command: "make "
+  args:
+    chdir: "{{nagios_core_dir}}"
+
+- name: run make install
+  command: "make install"
+  args:
+    chdir: "{{nagios_core_dir}}"
+

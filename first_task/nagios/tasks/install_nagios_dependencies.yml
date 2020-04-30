@@ -1,0 +1,4 @@
+- name: install dependencies
+  yum:
+    name: "{{ dependency }}"
+    state: present

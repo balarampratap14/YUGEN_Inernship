@@ -1,0 +1,32 @@
+- name: Create nagcmd group
+  group:
+    name: nagcmd
+    state: present
+
+- name: create and add nagios user to the nagcmd group
+  user:
+    name: nagios
+    shell: /bin/bash
+    groups: nagcmd
+
+- name: create and add apache user to the nagcmd group
+  user:
+    name: apache
+    shell: /bin/bash
+    groups: nagcmd
+
+- name: "create nagios dir ({{ nagios_dir }})"
+  file:
+    state: directory
+    path: "{{ nagios_dir }}"
+
+- name: "create cache dir ({{ local_cache_dir }})"
+  file:
+    state: directory
+    path: "{{ local_cache_dir }}"
+
+- name: put www-data in nagcmd group
+  user:
+    name: www-data
+    groups: nagcmd
+    append: yes

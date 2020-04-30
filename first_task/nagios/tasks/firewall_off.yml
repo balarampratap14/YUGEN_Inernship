@@ -1,0 +1,13 @@
+---
+- name: IPTABLES OFF
+  command: "iptables -F"
+
+- name: firewall enabling
+  firewalld:
+    permanent: yes
+    immediate: yes
+    state: enabled
+    port: 80/tcp 
+
+- name: SELINUX
+  command: sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config 

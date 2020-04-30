@@ -1,0 +1,11 @@
+---
+- name: enable nagios as service
+  systemd:
+    name: nagios
+    enabled: yes
+
+- name: enable httpd as service
+  systemd:
+    name: httpd
+    enabled: yes
+

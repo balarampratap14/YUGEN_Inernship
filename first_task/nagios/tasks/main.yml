@@ -1,0 +1,23 @@
+- name: Security setup
+  import_tasks: firewall_off.yml
+  tags: security
+
+- name: Install nagios common dependencies
+  import_tasks: install_nagios_dependencies.yml
+  tags: nagios_dependencies
+
+- name: Install nagios common tasks
+  import_tasks: create_nagios_common.yml
+  tags: nagios_common
+
+- name: Install nagios core
+  import_tasks: install_nagios_core.yml
+  tags: nagios_core
+
+- name: Enabling Services
+  import_tasks: enable_services.yml
+  tags: nagios_services
+
+- name: Enabling Services
+  import_tasks: install_nagios_plugin.yml
+  tags: nagios_services

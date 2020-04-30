@@ -1,0 +1,12 @@
+
+---
+
+- name: reload nagios
+  systemd:
+    name: nagios.service
+    state: started
+
+- name: httpd start
+  systemd:
+    name: httpd
+    state: started
