@@ -11,6 +11,8 @@
       - nagios-plugins-procs
       - nagios-plugins-users
       - nagios-plugins-disk
+      - nagios-plugins-nrpe
+      - nagios-plugins-uptime
       - nagios-plugins-all
     state: latest
   become: yes
@@ -34,13 +36,35 @@
   become: yes
   register: nrpe_configured
 
+- name: Allow NRPE on Firewall
+  firewalld:
+    port: 56669udp
+    permanent: yes
+    state: enabled
+  become: yes
+
+- name: Adding nrpe service to firewalld 
+  shell: firewall-cmd --add-service=nrpe --permanent
+  become: yes
+
+
+- name: Reload Firewalld 
+  shell: firewall-cmd --reload
+  become: yes
+
 - name: restart nrpe service
   service:
     name: nrpe
     state: restarted
   become: yes
   when: nrpe_configured.changed
-  
+
+- name: restart nrpe service
+  service:
+    name: nrpe
+    state: enabled
+  become: yes
+   
 
 - name: enable nrpe service and assure it is started
   service:
