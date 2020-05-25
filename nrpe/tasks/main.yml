@@ -1,0 +1,57 @@
+---
+
+- name: Intsall Epel-release
+  shell: amazon-linux-extras install 
+  become: yes
+- name: install nrpe
+  yum:
+    name:
+      - nrpe
+      - nagios-plugins-load
+      - nagios-plugins-procs
+      - nagios-plugins-users
+      - nagios-plugins-disk
+      - nagios-plugins-all
+    state: latest
+  become: yes
+  register: nrpe_installed
+  until: nrpe_installed is succeeded
+
+- name: Change file ownership, group and permissions of plugins folder
+  file:
+    path: /usr/lib64/nagios/plugins/
+    owner: nrpe
+    group: root
+    state: directory
+
+- name: configure nrpe
+  template:
+    src: 'nrpe.cfg.j2'
+    dest: '/etc/nagios/nrpe.cfg'
+    owner: 'nrpe'
+    group: 'nrpe'
+    mode: '0644'
+  become: yes
+  register: nrpe_configured
+
+- name: restart nrpe service
+  service:
+    name: nrpe
+    state: restarted
+  become: yes
+  when: nrpe_configured.changed
+  
+
+- name: enable nrpe service and assure it is started
+  service:
+    name: nrpe
+    enabled: yes
+    state: started
+  become: yes
+  tags:
+    - service
+
+
+
+
+...
