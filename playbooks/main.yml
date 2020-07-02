@@ -1,0 +1,6 @@
+---
+- name: Initaiting Role
+  hosts: localhost
+  roles:
+        - role: elk
+

@@ -1,0 +1,15 @@
+---
+<<<<<<< HEAD
+- hosts: monitoring
+  become: yes
+  gather_facts: yes
+  vars:
+    ansible_python_interpreter: /usr/bin/python2.7
+  roles:
+    - nagios
+=======
+- name: Initaiting Role
+  hosts: monitoring
+  roles:
+        - role: nagios
+>>>>>>> a4bcab6c3da21e04cb59dc34149b1f95cd6ba71b
